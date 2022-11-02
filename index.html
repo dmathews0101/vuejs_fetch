@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vuejs Project</title>
+</head>
+
+<body>
+    <h1>Project using VueJs</h1>
+    <div id="root">
+        <ul>
+            <li v-for="quote in quotes">
+                <h3>{{ quote.text }}</h3>
+                <ul>
+                    <li>{{ quote.author }}</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.6.12/dist/vue.js"></script>
+
+    <script>
+        new Vue({
+            el: '#root',
+            data: {
+                quotes: ''
+            },
+            methods: {
+                async getQuotes() {
+                    const response = await fetch('https://type.fit/api/quotes');
+                    const data = await response.json();
+                    this.quotes = data;
+                }
+            },
+            async created() {
+                console.log(this.quotes);
+                await this.getQuotes();
+            }
+
+        })
+    </script>
+</body>
+
+</html>
